@@ -25,7 +25,10 @@ SECRET_KEY = '1bu8e%if@ro_w*$b0_zra3fy&y8if%y+pgmenvzsv#l513!$#&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gawema.pythonanywhere.com']
+ALLOWED_HOSTS = [
+    'localhost',
+    'gawema.pythonanywhere.com'
+    ]
 
 
 # Application definition

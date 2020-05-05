@@ -25,7 +25,7 @@ SECRET_KEY = '1bu8e%if@ro_w*$b0_zra3fy&y8if%y+pgmenvzsv#l513!$#&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gawema.pythonanywhere.com']
 
 
 # Application definition
@@ -139,3 +139,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

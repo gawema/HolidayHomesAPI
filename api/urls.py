@@ -9,6 +9,9 @@ urlpatterns = [
     path('users/', views.UserList.as_view()),
     path('users/<int:pk>/', views.UserDetail.as_view()),
 
+    path('profile/', views.OwnProfile.as_view()),
+    path('profile/houses/', views.OwnHouseList.as_view()),
+
     path('bookings/', views.BookingList.as_view()),
     path('bookings/<int:pk>/', views.BookingDetail.as_view()),
 

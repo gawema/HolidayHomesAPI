@@ -64,4 +64,16 @@ class GalleryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
     
+class OwnHouseList(generics.ListAPIView):
+    serializer_class = HouseSerializer
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            return House.objects.filter(owner=user)
 
+class OwnProfile(generics.ListAPIView):
+    serializer_class = UserSerializer
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            return User.objects.filter(pk=user.pk)

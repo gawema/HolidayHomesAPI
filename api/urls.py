@@ -23,5 +23,8 @@ urlpatterns = [
 
     path('gallery/', views.GalleryList.as_view()),
     path('gallery/<int:pk>/', views.GalleryDetail.as_view()),
+
+    path('ig/posts/', views.getIgPost),
+
 ]
 

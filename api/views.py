@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 from .models import *
 from .serializers import *
+
+from .scraper import scrape
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -76,4 +79,11 @@ class GalleryList(generics.ListCreateAPIView):
 class GalleryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
-    
+
+def getIgPost(request):
+    profile = request.GET.get('profile', '')
+    if profile:
+        posts = scrape(profile)
+        if len(posts) > 0:
+            return HttpResponse(posts, content_type="application/json")
+    return HttpResponse(status=404)

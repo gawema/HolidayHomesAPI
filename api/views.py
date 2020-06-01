@@ -12,9 +12,9 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     def get_queryset(self):
-        if self.request.method == ('PATCH' or 'DELETE'):
+        if self.request.method == 'PATCH' or self.request.method == 'DELETE':
             user = self.request.user
-            return User.objects.filter(pk=user.pk)    
+            return User.objects.filter(pk=user.pk)
         return User.objects.all()
 
 class HouseList(generics.ListCreateAPIView):
@@ -24,11 +24,24 @@ class HouseList(generics.ListCreateAPIView):
 class HouseDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = HouseSerializer
     def get_queryset(self):
-        if self.request.method == ('PATCH' or 'DELETE'):
+        if self.request.method == 'PATCH' or self.request.method == 'DELETE':
             user = self.request.user
             return House.objects.filter(owner=user.pk)  
-        print(self.request.data)  
         return House.objects.all()
+
+class OwnHouseList(generics.ListAPIView):
+    serializer_class = HouseSerializer
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            return House.objects.filter(owner=user)
+
+class OwnProfile(generics.ListAPIView):
+    serializer_class = UserSerializer
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            return User.objects.filter(pk=user.pk)
 
 class BookingList(generics.ListCreateAPIView):
     queryset = Booking.objects.all()
@@ -64,16 +77,3 @@ class GalleryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
     
-class OwnHouseList(generics.ListAPIView):
-    serializer_class = HouseSerializer
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            user = self.request.user
-            return House.objects.filter(owner=user)
-
-class OwnProfile(generics.ListAPIView):
-    serializer_class = UserSerializer
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            user = self.request.user
-            return User.objects.filter(pk=user.pk)
